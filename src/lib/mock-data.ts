@@ -54,7 +54,8 @@ export const getRandomGame = (): Game => {
     numMods: randomNumber(100, 999),
     numDownloads: randomNumber(100, 999),
     tileURL: game.tileURL,
-    categories: [],
+    backdropURL: game.tileURL,
+    description: game.tileURL,
   };
 };
 
