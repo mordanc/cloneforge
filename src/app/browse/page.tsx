@@ -34,14 +34,9 @@ export default function Browse() {
   const [games, setGames] = useState<Game[]>([]);
 
   const populateList = async () => {
-    if (!searchText) {
-      const res = await getGames();
-      setGames(res);
-    } else {
-      console.log(searchText)
-      const res = await searchGames(searchText);
-      setGames(res);
-    }
+    const fn = searchText ? () => searchGames(searchText) : getGames;
+    const res = await fn();
+    setGames(res);
   };
 
   useEffect(() => {
@@ -65,10 +60,7 @@ export default function Browse() {
           onChange={(e) => setSearchText(e.target.value)}
           placeholder="Search for a game..."
         />
-        <Button
-          className="h-full ml-4 w-16"
-          onClick={() => populateList()}
-        >
+        <Button className="h-full ml-4 w-16" onClick={() => populateList()}>
           <Search size={"1.5rem"} />
         </Button>
       </div>

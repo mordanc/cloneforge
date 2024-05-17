@@ -8,7 +8,16 @@ import { Header } from "@/components/header";
 import PageWrapper from "@/components/page-wrapper";
 import { getGames } from "@/server/actions";
 import { ImageBackdrop } from "@/components/image-backdrop";
-
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 export default async function Home() {
   const games = await getGames(5);
   return (
@@ -29,6 +38,23 @@ export default async function Home() {
             <Search size={"1.5rem"} />
           </Button>
         </div>
+        <Drawer  >
+          <DrawerTrigger>Open</DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+              <DrawerDescription>
+                This action cannot be undone.
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <Button>Submit</Button>
+              <DrawerClose>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
 
         <div className="flex w-full justify-between">
           <h1 className="text-xl ">Featured Games</h1>
