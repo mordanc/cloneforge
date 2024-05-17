@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Game } from "@/types";
 
-function Description({ title }: { title: string }) {
+function Description({ gameInfo }: { gameInfo: Game }) {
   const [truncateDescription, setTruncateDescription] = useState(true);
   const [parent, enableAnimations] = useAutoAnimate(/* optional config */);
 
@@ -14,9 +15,7 @@ function Description({ title }: { title: string }) {
     <div className="flex space-x-4">
       <div>
         <Image
-          src={
-            "https://utfs.io/f/f9cfeba4-e114-451a-8213-fb5d39f72215-989wo6.webp"
-          }
+          src={gameInfo.tileURL}
           alt="dragonflight"
           width={150}
           height={150}
@@ -24,7 +23,9 @@ function Description({ title }: { title: string }) {
       </div>
       <div className="dark:text-slate-400 flex flex-col space-y-4 transition-all">
         <div className="flex items-center h-min space-x-4 ">
-          <h1 className="text-3xl dark:text-slate-300">{title} Addons</h1>
+          <h1 className="text-3xl dark:text-slate-300">
+            {gameInfo.title} Addons
+          </h1>
           <div>
             <span className="w-2 border-l"></span>
           </div>
@@ -34,7 +35,7 @@ function Description({ title }: { title: string }) {
         <p>WoW addons on CloneForge - the Home for the Best WoW Addons</p>
         <div ref={parent}>
           <p
-            className={clsx("max-w-3xl transition", {
+            className={clsx("lg:max-w-3xl max-w-md transition", {
               truncate: truncateDescription,
             })}
           >

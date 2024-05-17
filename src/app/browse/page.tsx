@@ -18,19 +18,18 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getRandomGames, randomNumber } from "@/lib/mock-data";
 import { Header } from "@/components/header";
+import PageWrapper from "@/components/page-wrapper";
 
 export default function Browse() {
   const [selectedSort, setSelectedSort] = useState("Popularity");
 
   const games = getRandomGames(12);
   return (
-    <div className="  max-w-5xl flex flex-col space-y-8 w-full mx-auto">
-      {/* copy */}
+    <PageWrapper className="flex flex-col space-y-12">
       <Header />
 
       {/* search */}
-
-      <div className="flex h-16">
+      <div className="flex h-16 ">
         <Input
           className="h-full"
           type="text"
@@ -50,7 +49,6 @@ export default function Browse() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {/* <SelectLabel>Popularity</SelectLabel> */}
               <SelectItem value="Popularity">Popularity</SelectItem>
               <SelectItem value="Name">Name</SelectItem>
               <SelectItem value="New">New</SelectItem>
@@ -61,7 +59,6 @@ export default function Browse() {
 
       {/* list */}
       <h1 className="text-xl ">Games</h1>
-
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 grid-cols-2 gap-4">
         {games.map((game, index) => (
           <GameInfoCard
@@ -69,9 +66,10 @@ export default function Browse() {
             numMods={game.numMods}
             numDownloads={game.numDownloads}
             title={game.title}
+            tileURL={game.tileURL}
           />
         ))}
       </div>
-    </div>
+    </PageWrapper>
   );
 }

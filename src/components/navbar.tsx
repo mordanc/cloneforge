@@ -7,7 +7,7 @@ import { Flame } from "lucide-react";
 
 const NavItems = [
   { text: "Browse", url: "/browse" },
-  { text: "Create", url: "/about" },
+  { text: "Create", url: "/create" },
   { text: "Studios", url: "/contact" },
   { text: "Community", url: "/contact" },
   { text: "Support", url: "/contact" },
@@ -15,8 +15,8 @@ const NavItems = [
 
 export default function Navbar() {
   return (
-    <div className="flex shadow-lg justify-between px-6 py-4 sticky top-0 dark:bg-slate-950 bg-gray-300">
-      <div className="flex space-x-4 items-center">
+    <div className="flex flex-col sm:flex-row shadow-lg justify-between px-6 py-4 sticky top-0 dark:bg-slate-950 bg-gray-300">
+      <div className="flex space-x-4 items-center flex-col sm:flex-row">
         <Link href="/">
           <span className="xl:mr-24 cursor-pointer">CloneForge</span>
         </Link>
@@ -24,7 +24,7 @@ export default function Navbar() {
           <NavItem key={item.text} text={item.text} href={item.url} />
         ))}
       </div>
-      <div className="flex space-x-4 items-center">
+      <div className="flex space-x-4 items-center flex-col sm:flex-row">
         <Button variant={"link"} className="items-center">
           <Flame />
           <span className="ml-2">Surprise Me</span>

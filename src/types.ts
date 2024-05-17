@@ -1,3 +1,5 @@
+import { GamesTable } from "./server/db/schema";
+
 export interface Addon {
   id: string;
   name: string;
@@ -22,9 +24,47 @@ export interface Attachment {
   url: string;
 }
 
-export interface Game {
-  title: string;
-  numMods: number;
-  numDownloads: number;
-  tileURL: string;
-}
+// export interface Game {
+//   title: string;
+//   numMods: number;
+//   numDownloads: number;
+//   tileURL: string;
+//   categories: string[];
+// }
+
+export const categories = [
+  "Achievements",
+  "Action Bars",
+  "Artwork",
+  "Auction & Economy",
+  "Audio & Video",
+  "Bags & Inventory",
+  "Boss Encounters",
+  "Buffs & Debuffs",
+  "Chat & Communication",
+  "Class",
+  "Combat",
+  "Companions",
+  "Data Export",
+  "Development Tools",
+  "Garrison",
+  "Guild",
+  "Libraries",
+  "Mail",
+  "Map & Minimap",
+  "Minigames",
+  "Miscellaneous",
+  "Plugins",
+  "Professions",
+  "PvP",
+  "Quests & Leveling",
+  "Roleplay",
+  "Tooltip",
+  "Twitch Integration",
+  "Unit Frames",
+] as const;
+
+// above array as an type
+export type Category = (typeof categories)[number];
+
+export type Game = typeof GamesTable.$inferInsert;

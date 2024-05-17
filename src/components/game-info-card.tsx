@@ -14,25 +14,20 @@ interface GameInfoCardProps {
   numMods: number;
   numDownloads: number;
   title: string;
+  tileURL: string;
 }
 
 export const GameInfoCard = ({
   numMods,
   numDownloads,
   title,
+  tileURL,
 }: GameInfoCardProps) => {
   return (
     <div className="cursor-pointer">
       <div className="hover:opacity-75">
         <Link href={`/${title}`}>
-          <Image
-            src={
-              "https://utfs.io/f/f9cfeba4-e114-451a-8213-fb5d39f72215-989wo6.webp"
-            }
-            alt="dragonflight"
-            width={285}
-            height={380}
-          />
+          <Image src={tileURL} alt="dragonflight" width={285} height={380} />
         </Link>
       </div>
 

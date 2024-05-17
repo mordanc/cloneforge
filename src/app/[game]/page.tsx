@@ -1,30 +1,44 @@
+"use client";
+
 import { Header } from "@/components/header";
 import Description from "./description";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { CategoriesButton } from "./categories-button";
-import Image from "next/image";
 import PageWrapper from "@/components/page-wrapper";
+import { getRandomGame } from "@/lib/mock-data";
+import { ImageBackdrop } from "@/components/image-backdrop";
+import { createGame, deleteGame, getGameByTitle } from "@/server/actions";
+import { useEffect, useState } from "react";
+import { Game } from "@/types";
 
-export default function page({ params }: { params: { game: string } }) {
+export default function Page({ params }: { params: { game: string } }) {
   const title = decodeURI(params.game);
+  const [gameInfo, setGameInfo] = useState<Game>({
+    title: "",
+    numMods: 0,
+    numDownloads: 0,
+    tileURL: "",
+    backdropURL: "",
+  });
+
+  const getGame = async () => {
+    const testGame = await getGameByTitle(title);
+    setGameInfo(testGame[0]);
+    console.log(testGame);
+  };
+
+  useEffect(() => {
+    getGame();
+  }, []);
+
   return (
-    // <PageWrapper>
-    <div className="pt-24 w-full max-w-5xl mx-auto ">
-      <Image
-        className="absolute top-0 right-0 w-full -z-10 h-[450px] "
-        src={
-          "https://utfs.io/f/574c0290-48d1-4a8e-93a3-2940ae737137-ce8p23.jpg"
-        }
-        alt="dragonflight"
-        width={1280}
-        height={720}
-      />
-      <div className="bg-gradient-to-b from-transparent dark:to-slate-950  absolute top-0 right-0 w-full -z-10 h-[450px] to-70% to-white" />
+    <PageWrapper>
+      <ImageBackdrop size="default" url={gameInfo?.backdropURL} />
 
       <div className=" flex flex-col space-y-8 z-10 ">
-        <Description title={title} />
+        <Description gameInfo={gameInfo} />
 
         <div className="flex h-16 w-full">
           <CategoriesButton title={title} />
@@ -39,7 +53,16 @@ export default function page({ params }: { params: { game: string } }) {
           </Button>
         </div>
       </div>
-    </div>
-    // </PageWrapper>
+
+      <Button
+        className="mt-4"
+        onClick={() => {
+          gameInfo.id && deleteGame(gameInfo.id);
+        }}
+        variant={"default"}
+      >
+        Delete
+      </Button>
+    </PageWrapper>
   );
 }

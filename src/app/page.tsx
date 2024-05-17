@@ -6,9 +6,12 @@ import { getRandomGames, randomNumber } from "@/lib/mock-data";
 import { GameInfoCard } from "@/components/game-info-card";
 import { Header } from "@/components/header";
 import PageWrapper from "@/components/page-wrapper";
+import { getGames } from "@/server/actions";
 
-export default function Home() {
-  const games = getRandomGames(12);
+export default async function Home() {
+  // const games = getRandomGames(12);
+
+  const games = await getGames();
   return (
     <PageWrapper>
       <main className="flex flex-col items-center space-y-12">
@@ -31,6 +34,7 @@ export default function Home() {
               numMods={game.numMods}
               numDownloads={game.numDownloads}
               title={game.title}
+              tileURL={game.tileURL}
             />
           ))}
         </div>
