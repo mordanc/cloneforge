@@ -3,7 +3,7 @@
 import { Game } from "@/types";
 import { db } from "@/server/db";
 import { GamesTable } from "./db/schema";
-import { eq } from "drizzle-orm";
+import { eq, like } from "drizzle-orm";
 
 export async function createGame({
   title,
@@ -11,6 +11,7 @@ export async function createGame({
   numDownloads,
   tileURL,
   backdropURL,
+  description,
 }: Game) {
   await db.insert(GamesTable).values({
     title,
@@ -18,15 +19,24 @@ export async function createGame({
     numDownloads,
     tileURL,
     backdropURL,
+    description,
   });
 }
 
-export async function getGames() {
-  return db.select().from(GamesTable);
+export async function getGames(num: number = 100) {
+  return db.select().from(GamesTable).limit(num);
 }
 
 export async function getGameById(id: number) {
   return db.select().from(GamesTable).where(eq(GamesTable.id, id));
+}
+
+export async function searchGames(query: string) {
+  console.log(query)
+  return db
+    .select()
+    .from(GamesTable)
+    .where(like(GamesTable.title, `%${query}%`));
 }
 
 export async function getGameByTitle(title: string) {

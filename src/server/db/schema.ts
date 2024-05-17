@@ -21,6 +21,7 @@ export const GamesTable = pgTable(
     tileURL: text("tileURL").notNull(),
     backdropURL: text("backdropURL").notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
+    description: text("description").notNull(),
   },
   (games) => {
     return {

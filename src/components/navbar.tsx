@@ -15,7 +15,7 @@ const NavItems = [
 
 export default function Navbar() {
   return (
-    <div className="flex flex-col sm:flex-row shadow-lg justify-between px-6 py-4 sticky top-0 dark:bg-slate-950 bg-gray-300">
+    <div className="flex flex-col border-b sm:border-b-0 md:flex-row shadow-lg justify-between px-6 py-4 sticky top-0 dark:bg-slate-950 bg-gray-300">
       <div className="flex space-x-4 items-center flex-col sm:flex-row">
         <Link href="/">
           <span className="xl:mr-24 cursor-pointer">CloneForge</span>

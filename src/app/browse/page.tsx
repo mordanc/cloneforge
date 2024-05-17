@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GameInfoCard } from "../../components/game-info-card";
 
 import {
@@ -19,23 +19,56 @@ import { Button } from "@/components/ui/button";
 import { getRandomGames, randomNumber } from "@/lib/mock-data";
 import { Header } from "@/components/header";
 import PageWrapper from "@/components/page-wrapper";
+import { getGames, searchGames } from "@/server/actions";
+import { Game } from "@/types";
+import { ImageBackdrop } from "@/components/image-backdrop";
+import { useSearchParams } from "next/navigation";
 
 export default function Browse() {
-  const [selectedSort, setSelectedSort] = useState("Popularity");
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
 
-  const games = getRandomGames(12);
+  const [selectedSort, setSelectedSort] = useState("Popularity");
+  const [searchText, setSearchText] = useState<string>(search ?? "");
+
+  const [games, setGames] = useState<Game[]>([]);
+
+  const populateList = async () => {
+    if (!searchText) {
+      const res = await getGames();
+      setGames(res);
+    } else {
+      console.log(searchText)
+      const res = await searchGames(searchText);
+      setGames(res);
+    }
+  };
+
+  useEffect(() => {
+    populateList();
+  }, []);
+
   return (
     <PageWrapper className="flex flex-col space-y-12">
       <Header />
+      <ImageBackdrop
+        url="https://utfs.io/f/803153c1-c932-4f9d-a470-ac1694019bfc-vqi2fv.jpg"
+        size={"lg"}
+      />
 
       {/* search */}
       <div className="flex h-16 ">
         <Input
           className="h-full"
           type="text"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           placeholder="Search for a game..."
         />
-        <Button className="h-full ml-4 w-16">
+        <Button
+          className="h-full ml-4 w-16"
+          onClick={() => populateList()}
+        >
           <Search size={"1.5rem"} />
         </Button>
       </div>
@@ -70,6 +103,12 @@ export default function Browse() {
           />
         ))}
       </div>
+
+      {games.length === 0 && (
+        <div className="text-center w-full">
+          <h1 className="  text-2xl">No games found</h1>
+        </div>
+      )}
     </PageWrapper>
   );
 }

@@ -13,6 +13,8 @@ export default function Page() {
   const [numMods, setNumMods] = useState(0);
   const [numDownloads, setNumDownloads] = useState(0);
 
+  const [description, setDescription] = useState("");
+
   const onSubmit = () => {
     createGame({
       title,
@@ -20,6 +22,7 @@ export default function Page() {
       numDownloads,
       tileURL,
       backdropURL,
+      description,
     });
   };
 
@@ -67,8 +70,31 @@ export default function Page() {
           value={backdropURL}
           onChange={(e) => setBackdropURL(e.target.value)}
         />
+
+        <label>Description</label>
+        <textarea
+          value={description}
+          className="h-[200px]"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
         <Button type="submit">Submit</Button>
+        <Button
+          type="button"
+          onClick={() => {
+            console.log(description.split("\n"));
+          }}
+        >
+          test
+        </Button>
       </form>
+
+      {description.split("\n").map((line, index) => (
+        <div key={index}>
+          <br />
+          <p>{line}</p>
+        </div>
+      ))}
     </PageWrapper>
   );
 }

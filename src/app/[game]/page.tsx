@@ -21,6 +21,7 @@ export default function Page({ params }: { params: { game: string } }) {
     numDownloads: 0,
     tileURL: "",
     backdropURL: "",
+    description: "",
   });
 
   const getGame = async () => {
