@@ -30,39 +30,28 @@ export const GamesTable = pgTable(
   }
 );
 
-// export const gamesRelations = relations(GamesTable, ({ many }) => ({
-//   gamesToCategories: many(gamesToCategories),
-// }));
+export const gamesRelations = relations(GamesTable, ({ many }) => ({
+  addons: many(AddonsTable),
+}));
 
-// export const CategoriesTable = pgTable(
-//   "categories",
-//   {
-//     id: serial("id").primaryKey(),
-//     title: text("title").notNull(),
-//     createdAt: timestamp("createdAt").defaultNow().notNull(),
-//   },
-//   (categories) => {
-//     return {
-//       uniqueIdx: uniqueIndex("category_title").on(categories.title),
-//     };
-//   }
-// );
+export const AddonsTable = pgTable(
+  "addons",
+  {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    gameId: integer("gameId"),
+  },
+  (addons) => {
+    return {
+      uniqueIdx: uniqueIndex("addon_title").on(addons.title),
+    };
+  }
+);
 
-// export const categoriesRelations = relations(CategoriesTable, ({ many }) => ({
-//   gamesToCategories: many(gamesToCategories),
-// }));
-
-// export const gamesToCategories = pgTable(
-//   "games_to_categories",
-//   {
-//     gameId: integer("user_id")
-//       .notNull()
-//       .references(() => GamesTable.id),
-//     categoryId: integer("group_id")
-//       .notNull()
-//       .references(() => CategoriesTable.id),
-//   },
-//   (t) => ({
-//     pk: primaryKey({ columns: [t.gameId, t.categoryId] }),
-//   })
-// );
+export const addonsRelations = relations(AddonsTable, ({ one }) => ({
+  Game: one(GamesTable, {
+    fields: [AddonsTable.gameId],
+    references: [GamesTable.id],
+  }),
+}));

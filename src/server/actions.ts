@@ -2,7 +2,7 @@
 
 import { Game } from "@/types";
 import { db } from "@/server/db";
-import { GamesTable } from "./db/schema";
+import { AddonsTable, GamesTable } from "./db/schema";
 import { eq, like } from "drizzle-orm";
 
 export async function createGame({
@@ -32,7 +32,7 @@ export async function getGameById(id: number) {
 }
 
 export async function searchGames(query: string) {
-  console.log(query)
+  console.log(query);
   return db
     .select()
     .from(GamesTable)
@@ -45,4 +45,17 @@ export async function getGameByTitle(title: string) {
 
 export async function deleteGame(id: number) {
   await db.delete(GamesTable).where(eq(GamesTable.id, id));
+}
+
+export async function createAddon({
+  title,
+  gameId,
+}: {
+  title: string;
+  gameId: number;
+}) {
+  await db.insert(AddonsTable).values({
+    title,
+    gameId,
+  });
 }
