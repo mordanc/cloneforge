@@ -1,4 +1,4 @@
-import { createGame } from "@/server/actions";
+import { createGame } from "@/server/queries";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import Image from "next/image";

@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { getRandomGames, randomNumber } from "@/lib/mock-data";
 import { Header } from "@/components/header";
 import PageWrapper from "@/components/page-wrapper";
-import { getGames, searchGames } from "@/server/actions";
+import { getGames, searchGames } from "@/server/queries";
 import { Game } from "@/types";
 import { ImageBackdrop } from "@/components/image-backdrop";
 import { useSearchParams } from "next/navigation";

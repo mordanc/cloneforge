@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Game } from "@/types";
 
-function Description({ gameInfo }: { gameInfo: Game }) {
+function Description({ gameInfo }: { gameInfo?: Game }) {
   const [truncateDescription, setTruncateDescription] = useState(true);
   const [parent, enableAnimations] = useAutoAnimate(/* optional config */);
 
-  return (
+  return gameInfo ? (
     <div className="flex space-x-4">
       <div>
         <Image
@@ -91,6 +91,8 @@ function Description({ gameInfo }: { gameInfo: Game }) {
         </div>
       </div>
     </div>
+  ) : (
+    <div>No Game Info</div>
   );
 }
 

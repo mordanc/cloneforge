@@ -68,3 +68,7 @@ export const categories = [
 export type Category = (typeof categories)[number];
 
 export type Game = typeof GamesTable.$inferInsert;
+
+export interface GameWithAddons extends Game {
+  addons: string[];
+}

@@ -1,100 +1,17 @@
-"use client";
-
 import PageWrapper from "@/components/page-wrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { createGame } from "@/server/actions";
-import { useState } from "react";
 
-export default function Page() {
-  const [title, setTitle] = useState("");
-  const [tileURL, setTileURL] = useState("");
-  const [backdropURL, setBackdropURL] = useState("");
-  const [numMods, setNumMods] = useState(0);
-  const [numDownloads, setNumDownloads] = useState(0);
+import FormSection from "./form-section";
+import { getGames } from "@/server/queries";
 
-  const [description, setDescription] = useState("");
+// export const dynamic = 'force-dynamic';
 
-  const onSubmit = () => {
-    createGame({
-      title,
-      numMods,
-      numDownloads,
-      tileURL,
-      backdropURL,
-      description,
-    });
-  };
+export default async function Page() {
+  // TODO get most popular games first
+  const games = await getGames(5);
 
   return (
     <PageWrapper>
-      <h1 className="mb-12 text-2xl">Create a Game</h1>
-      <form
-        onSubmit={() => onSubmit()}
-        className="grid grid-cols-2 gap-4 border p-3 border-slate-500"
-      >
-        <label>Title</label>
-        <Input
-          placeholder="Cool Game"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <label>Number of mods</label>
-        <Input
-          value={numMods}
-          type="number"
-          onChange={(e) => setNumMods(Number(e.target.value))}
-        />
-
-        <label>Number of downloads</label>
-        <Input
-          value={numDownloads}
-          type="number"
-          onChange={(e) => setNumDownloads(Number(e.target.value))}
-        />
-
-        <label>Tile Image</label>
-        <Input
-          type="text"
-          placeholder="https://example.com/image.jpg"
-          value={tileURL}
-          onChange={(e) => setTileURL(e.target.value)}
-        />
-
-        <label>Backdrop Image</label>
-        <Input
-          type="text"
-          placeholder="https://example.com/image.jpg"
-          value={backdropURL}
-          onChange={(e) => setBackdropURL(e.target.value)}
-        />
-
-        <label>Description</label>
-        <textarea
-          value={description}
-          className="h-[200px]"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <Button type="submit">Submit</Button>
-        <Button
-          type="button"
-          onClick={() => {
-            console.log(description.split("\n"));
-          }}
-        >
-          test
-        </Button>
-      </form>
-
-      {description.split("\n").map((line, index) => (
-        <div key={index}>
-          <br />
-          <p>{line}</p>
-        </div>
-      ))}
+      <FormSection />
     </PageWrapper>
   );
 }

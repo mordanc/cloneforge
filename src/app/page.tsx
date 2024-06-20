@@ -5,7 +5,7 @@ import { randomNumber } from "@/lib/mock-data";
 import { GameInfoCard } from "@/components/game-info-card";
 import { Header } from "@/components/header";
 import PageWrapper from "@/components/page-wrapper";
-import { getGames } from "@/server/actions";
+import { getGames } from "@/server/queries";
 import { ImageBackdrop } from "@/components/image-backdrop";
 
 import HomeCarousel from "@/components/home-carousel";
